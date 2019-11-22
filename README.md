@@ -40,6 +40,13 @@ cd install-kube-prometheus
 bash deploy.sh
 ```
 
+注意deploy.sh适合K8s 1.16及以上版本，如果是K8s 1.15及以下，则使用以下命令：
+
+```
+cd install-kube-prometheus
+bash deploy-on-k8s-1.15-and-lower.sh
+```
+
 **4. 删除Kube-Prometheus**
 
 执行命令：
