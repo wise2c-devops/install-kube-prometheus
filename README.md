@@ -32,10 +32,18 @@ bash fix-k8s-worker-nodes.sh
 
 **3. 离线部署**
 
-拷贝部署机整个install目录至一个k8s worker节点，修改一下components.txt里的变量：
+拷贝部署机整个install-kube-prometheus目录至一个K8s节点，修改一下components.txt里的变量：
 
 将MyImageRepositoryIP=192.168.9.20修改成实际的私有镜像仓库地址，并执行：
 ```
 cd install-kube-prometheus
 bash deploy.sh
+```
+
+**4. 删除Kube-Prometheus**
+
+执行命令：
+```
+cd install-kube-prometheus
+bash remove.sh
 ```
