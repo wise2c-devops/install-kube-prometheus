@@ -20,15 +20,14 @@ hwclock -w
 每个k8s master节点执行：
 ```
 cd install-kube-prometheus
-./fix-k8s-master-nodes.sh
+bash fix-k8s-master-nodes.sh
 cd ../../
 ```
 
 每个k8s worker节点执行：
 ```
 cd install-kube-prometheus
-./fix-k8s-worker-nodes.sh
-cd ../../
+bash fix-k8s-worker-nodes.sh
 ```
 
 **3. 离线部署**
