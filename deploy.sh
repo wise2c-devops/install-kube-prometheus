@@ -19,7 +19,7 @@ echo 'Images pushed.'
 
 ######### Update deploy yaml files #########
 rm -rf kube-prometheus-$KubePrometheusVersion
-tar zxvf kube-prometheus-v$KubePrometheusVersion-origin.tar.gz
+tar zxvf file/kube-prometheus-v$KubePrometheusVersion-origin.tar.gz
 cd kube-prometheus-$KubePrometheusVersion
 sed -i "s/quay.io\/coreos/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "quay.io/coreos" ./ |grep .yaml)
 sed -i "s/quay.io\/prometheus/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "quay.io/prometheus" ./ |grep .yaml)
