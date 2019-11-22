@@ -18,8 +18,9 @@ for file in $(cat file/images-list.txt); do docker push $MyImageRepositoryIP/$My
 echo 'Images pushed.'
 
 ######### Update deploy yaml files #########
+cd file
 rm -rf kube-prometheus-$KubePrometheusVersion
-tar zxvf file/kube-prometheus-v$KubePrometheusVersion-origin.tar.gz
+tar zxvf kube-prometheus-v$KubePrometheusVersion-origin.tar.gz
 cd kube-prometheus-$KubePrometheusVersion
 sed -i "s/quay.io\/coreos/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "quay.io/coreos" ./ |grep .yaml)
 sed -i "s/quay.io\/prometheus/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "quay.io/prometheus" ./ |grep .yaml)
@@ -27,11 +28,7 @@ sed -i "s/grafana\/grafana/$MyImageRepositoryIP\/$MyImageRepositoryProject\/graf
 sed -i "s/gcr.io\/google_containers/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "gcr.io/google_containers" ./ |grep .yaml)
 sed -i "s/k8s.gcr.io/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "k8s.gcr.io" ./ |grep .yaml)
 
-cd ..
-rm -f temp.txt
-
 # Wait for CRDs to be ready, we need to split all yaml files to two parts
-cd kube-prometheus-$KubePrometheusVersion/
 mkdir phase2
 mv manifests/0prometheus-operator-serviceMonitor.yaml phase2/
 mv manifests/alertmanager-alertmanager.yaml phase2/
@@ -86,17 +83,18 @@ until kctl get alertmanagers.monitoring.coreos.com > /dev/null 2>&1; do sleep 1;
 echo 'Phase1 done!'
 
 kubectl apply -f manifests/phase2
+cd ../../
 
 echo 'Phase2 done!'
 
-kubectl apply -f ../template/prometheus-service.yaml
-kubectl apply -f ../template/alertmanager-service.yaml
-kubectl apply -f ../template/grafana-service.yaml
+kubectl apply -f template/prometheus-service.yaml
+kubectl apply -f template/alertmanager-service.yaml
+kubectl apply -f template/grafana-service.yaml
 
 echo 'NodePorts are set for services.'
 
-kubectl apply -f ../addon/k8s
+kubectl apply -f addon/k8s
 
 echo 'Kube-Prometheus is installed.'
 
-#kubectl apply -f ../addon/etcd-monitor.yaml
+#kubectl apply -f addon/etcd-monitor.yaml
