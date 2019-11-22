@@ -19,14 +19,14 @@ hwclock -w
 
 每个k8s master节点执行：
 ```
-cd deploy/scripts/
+cd install-kube-prometheus
 ./fix-k8s-master-nodes.sh
 cd ../../
 ```
 
 每个k8s worker节点执行：
 ```
-cd deploy/scripts/
+cd install-kube-prometheus
 ./fix-k8s-worker-nodes.sh
 cd ../../
 ```
