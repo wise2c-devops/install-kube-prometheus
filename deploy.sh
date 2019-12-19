@@ -26,13 +26,13 @@ sed -i "s/quay.io\/coreos/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(g
 sed -i "s/quay.io\/prometheus/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "quay.io/prometheus" ./ |grep .yaml)
 sed -i "s/grafana\/grafana/$MyImageRepositoryIP\/$MyImageRepositoryProject\/grafana/g" $(grep -lr "grafana/grafana" ./ |grep .yaml)
 sed -i "s/gcr.io\/google_containers/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "gcr.io/google_containers" ./ |grep .yaml)
-sed -i "s/k8s.gcr.io/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "k8s.gcr.io" ./ |grep .yaml)
+#sed -i "s/k8s.gcr.io/$MyImageRepositoryIP\/$MyImageRepositoryProject/g" $(grep -lr "k8s.gcr.io" ./ |grep .yaml)
 
 ######### Update yaml files to supports K8s v1.16 #########
 cd manifests/
-sed -i "s#apps/v1beta2#apps/v1#g" $(ls)
+sed -i "s#apps/v1beta2#apps/v1#g" $(ls *.yaml)
 cd setup
-sed -i "s#apps/v1beta2#apps/v1#g" $(ls)
+sed -i "s#apps/v1beta2#apps/v1#g" $(ls *.yaml)
 cd ../../
 
 ######### Deploy prometheus operator and kube-prometheus #########
